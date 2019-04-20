@@ -2,6 +2,9 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
+const bodyParser = require('body-parser')
+
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
@@ -56,7 +59,21 @@ app.get('/restaurantList/:id', (req, res) => {
 
 // 新增一筆  restaurant
 app.post('/restaurantList', (req, res) => {
-  res.send('建立 restaurant')
+  const restaurant = RestaurantList({
+    name: req.body.name,
+    name_en: req.body.name_en,
+    category: req.body.category,
+    image: req.body.image,
+    location: req.body.location,
+    phone: req.body.phone,
+    google_map: req.body.google_map,
+    rating: req.body.rating,
+    description: req.body.description
+  })
+  restaurant.save(err => {
+    if (err) return console.error(err)
+    return res.redirect('/')
+  })
 })
 
 // 修改 restaurant 頁面
