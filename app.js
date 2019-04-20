@@ -78,12 +78,30 @@ app.post('/restaurantList', (req, res) => {
 
 // 修改 restaurant 頁面
 app.get('/restaurantList/:id/edit', (req, res) => {
-  res.send('修改 restaurant 頁面')
+  RestaurantList.findById(req.params.id, (err, restaurant) => {
+    if (err) return console.error(err)
+    return res.render('edit', { restaurant: restaurant })
+  })
 })
 
 // 修改 restaurant
 app.post('/restaurantList/:id', (req, res) => {
-  res.send('修改 restaurant')
+  RestaurantList.findById(req.params.id, (err, restaurant) => {
+    if (err) return console.error(err)
+    restaurant.name = req.body.name
+    restaurant.name_en = req.body.name_en
+    restaurant.category = req.body.category
+    restaurant.image = req.body.image
+    restaurant.location = req.body.location
+    restaurant.phone = req.body.phone
+    restaurant.google_map = req.body.google_map
+    restaurant.rating = req.body.rating
+    restaurant.description = req.body.description
+    restaurant.save(err => {
+      if (err) return console.error(err)
+      return res.redirect(`/restaurantList/${req.params.id}`)
+    })
+  })
 })
 
 // 刪除 restaurant

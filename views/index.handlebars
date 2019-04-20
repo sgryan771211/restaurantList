@@ -2,7 +2,7 @@
 <div class="container search-bar">
   <div class="search-bar-outer">
     <div class="search-bar-inner">
-      <form action="/search">
+      <form action="/search/{{sort}}">
         <h4 class="mb-2">尋找餐廳：</h4>
         <div class="input-group">
           <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..."
@@ -17,14 +17,32 @@
 </div>
 
 <!-- restaurant list -->
-<div class="container mt-5">
+<div class="container mt-4">
+  <div class="row justify-content-end" id="dropdown">
+    <div class="dropdown mb-3">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        排列方式
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href='/sort/asc'>A -> Z</a>
+        <a class="dropdown-item" href='/sort/desc'>Z -> A</a>
+        <a class="dropdown-item" href='/sort/category'>類別</a>
+        <a class="dropdown-item" href='/sort/rating'>Z評分</a>
+      </div>
+    </div>
+  </div>
+
+
   <div class="row">
     <div class="col-md-10 col-12 mx-auto">
       <div class="card-columns">
         {{#each restaurants}}
-        <a href="/restaurantList/{{this.id}}" class="text-secondary">
+        <div class="text-secondary">
           <div class="card mb-3">
-            <img class="card-img-top" src="{{this.image}}" alt="{{this.name}}">
+            <a href="/restaurantList/{{this.id}}">
+              <img class="card-img-top" src="{{this.image}}" alt="{{this.name}}">
+            </a>
             <div class="card-body p-3">
               <h6 class="card-title mb-1">{{this.name}}</h6>
 
@@ -37,9 +55,19 @@
                 <i class="fas fa-star fa-xs"></i>
               </span>
 
+              <div class="text-right">
+                <div class="btn-group">
+                  <a href="/restaurantList/{{{this.id}}}/edit"><button type="button"
+                      class="btn btn-sm btn-outline-danger mx-1">Edit <i class="far fa-edit"></i></button></a>
+                  <form action="/restaurantList/{{{this.id}}}/delete?_method=DELETE" method="post">
+                    <button type="button submit" class="btn btn-sm btn-outline-danger">Delete <i
+                        class="far fa-trash-alt"></i></button>
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
-        </a>
+        </div>
         {{/each}}
       </div>
     </div>

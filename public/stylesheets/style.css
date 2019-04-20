@@ -35,6 +35,10 @@ header {
   color: #9b4b4b;
 }
 
+#dropdown {
+  width: 1030px;
+}
+
 .form-control::placeholder {
   color: #aaaaaa;
   font-size: 0.8rem;
@@ -84,6 +88,7 @@ header {
   right: 0;
   font-size: 3rem;
 }
+
 
 @media screen and (max-width: 992px) {
   
