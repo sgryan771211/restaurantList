@@ -6,6 +6,9 @@ const exphbs = require('express-handlebars')
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
+// 設定靜態檔案
+app.use(express.static('public'))
+
 mongoose.connect('mongodb://localhost/restaurantList', { useNewUrlParser: true })
 
 const db = mongoose.connection
@@ -26,7 +29,10 @@ const RestaurantList = require('./models/restaurantList')
 // 設定路由
 // restaurantList 首頁
 app.get('/', (req, res) => {
-  return res.render('index')
+  RestaurantList.find((err, restaurants) => {
+    if (err) return console.error(err)
+    return res.render('index', { restaurants: restaurants })
+  })
 })
 
 // 列出全部 restaurant
