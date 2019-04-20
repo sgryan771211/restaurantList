@@ -74,6 +74,19 @@ app.post('/restaurantList/:id/delete', (req, res) => {
   res.send('刪除 restaurant')
 })
 
+// search 功能
+app.get('/search', (req, res) => {
+  RestaurantList.find((err, restaurants) => {
+    if (err) return console.error(err)
+    const keyword = req.query.keyword
+    const searchResults = restaurants.filter(restaurant => {
+      return restaurant.name.toLowerCase().includes(keyword.toLowerCase()) ||
+        restaurant.category.toLowerCase().includes(keyword.toLowerCase())
+    })
+    res.render('index', { restaurants: searchResults, keyword: keyword })
+  })
+})
+
 
 app.listen(3000, () => {
   console.log('app is running')
