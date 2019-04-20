@@ -106,7 +106,13 @@ app.post('/restaurantList/:id', (req, res) => {
 
 // 刪除 restaurant
 app.post('/restaurantList/:id/delete', (req, res) => {
-  res.send('刪除 restaurant')
+  RestaurantList.findById(req.params.id, (err, restaurant) => {
+    if (err) return console.error(err)
+    restaurant.remove(err => {
+      if (err) return console.error(err)
+      return res.redirect('/')
+    })
+  })
 })
 
 // search 功能
