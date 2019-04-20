@@ -3,11 +3,12 @@ const app = express()
 const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
+const methodoOverride = require('method-override')
 
 app.use(bodyParser.urlencoded({ extended: true }))
-
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
+app.use(methodoOverride('_method'))
 
 // 設定靜態檔案
 app.use(express.static('public'))
@@ -85,7 +86,7 @@ app.get('/restaurantList/:id/edit', (req, res) => {
 })
 
 // 修改 restaurant
-app.post('/restaurantList/:id', (req, res) => {
+app.put('/restaurantList/:id', (req, res) => {
   RestaurantList.findById(req.params.id, (err, restaurant) => {
     if (err) return console.error(err)
     restaurant.name = req.body.name
@@ -105,7 +106,7 @@ app.post('/restaurantList/:id', (req, res) => {
 })
 
 // 刪除 restaurant
-app.post('/restaurantList/:id/delete', (req, res) => {
+app.delete('/restaurantList/:id/delete', (req, res) => {
   RestaurantList.findById(req.params.id, (err, restaurant) => {
     if (err) return console.error(err)
     restaurant.remove(err => {
