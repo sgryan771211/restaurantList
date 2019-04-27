@@ -5,7 +5,7 @@ const { authenticated } = require('../config/auth')
 // 設定路由
 // 排序功能
 router.get('/asc', authenticated, (req, res) => {
-  RestaurantList.find({})
+  RestaurantList.find({ userId: req.user._id })
     .sort({ name: 'asc' })
     .exec((err, restaurants) => {
       if (err) return console.error(err)
@@ -15,7 +15,7 @@ router.get('/asc', authenticated, (req, res) => {
 })
 
 router.get('/desc', authenticated, (req, res) => {
-  RestaurantList.find({})
+  RestaurantList.find({ userId: req.user._id })
     .sort({ name: 'desc' })
     .exec((err, restaurants) => {
       if (err) return console.error(err)
@@ -25,7 +25,7 @@ router.get('/desc', authenticated, (req, res) => {
 })
 
 router.get('/category', authenticated, (req, res) => {
-  RestaurantList.find({})
+  RestaurantList.find({ userId: req.user._id })
     .sort({ category: 'asc' })
     .exec((err, restaurants) => {
       if (err) return console.error(err)
@@ -35,7 +35,7 @@ router.get('/category', authenticated, (req, res) => {
 })
 
 router.get('/rating', authenticated, (req, res) => {
-  RestaurantList.find({})
+  RestaurantList.find({ userId: req.user._id })
     .sort({ rating: 'desc' })
     .exec((err, restaurants) => {
       if (err) return console.error(err)

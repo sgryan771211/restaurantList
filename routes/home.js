@@ -5,7 +5,7 @@ const { authenticated } = require('../config/auth')
 // 設定路由
 // restaurantList 首頁
 router.get('/', authenticated, (req, res) => {
-  RestaurantList.find((err, restaurants) => {
+  RestaurantList.find({ userId: req.user._id }, (err, restaurants) => {
     if (err) return console.error(err)
     return res.render('index', { restaurants: restaurants })
   })

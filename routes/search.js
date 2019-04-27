@@ -5,7 +5,7 @@ const { authenticated } = require('../config/auth')
 // 設定路由
 // search 功能
 router.get('/', authenticated, (req, res) => {
-  RestaurantList.find((err, restaurants) => {
+  RestaurantList.find({ userId: req.user._id }, (err, restaurants) => {
     if (err) return console.error(err)
     const keyword = req.query.keyword
     const searchResults = restaurants.filter(restaurant => {
@@ -17,7 +17,7 @@ router.get('/', authenticated, (req, res) => {
 })
 
 router.get('/asc', authenticated, (req, res) => {
-  RestaurantList.find({})
+  RestaurantList.find({ userId: req.user._id })
     .sort({ name: 'asc' })
     .exec((err, restaurants) => {
       if (err) return console.error(err)
@@ -31,7 +31,7 @@ router.get('/asc', authenticated, (req, res) => {
 })
 
 router.get('/desc', authenticated, (req, res) => {
-  RestaurantList.find({})
+  RestaurantList.find({ userId: req.user._id })
     .sort({ name: 'desc' })
     .exec((err, restaurants) => {
       if (err) return console.error(err)
@@ -45,7 +45,7 @@ router.get('/desc', authenticated, (req, res) => {
 })
 
 router.get('/category', authenticated, (req, res) => {
-  RestaurantList.find({})
+  RestaurantList.find({ userId: req.user._id })
     .sort({ category: 'asc' })
     .exec((err, restaurants) => {
       if (err) return console.error(err)
@@ -59,7 +59,7 @@ router.get('/category', authenticated, (req, res) => {
 })
 
 router.get('/rating', authenticated, (req, res) => {
-  RestaurantList.find({})
+  RestaurantList.find({ userId: req.user._id })
     .sort({ rating: 'desc' })
     .exec((err, restaurants) => {
       if (err) return console.error(err)
