@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const RestaurantList = require('../models/restaurantList')
-
+const { authenticated } = require('../config/auth')
 // 設定路由
 // search 功能
-router.get('/', (req, res) => {
+router.get('/', authenticated, (req, res) => {
   RestaurantList.find((err, restaurants) => {
     if (err) return console.error(err)
     const keyword = req.query.keyword
@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
   })
 })
 
-router.get('/asc', (req, res) => {
+router.get('/asc', authenticated, (req, res) => {
   RestaurantList.find({})
     .sort({ name: 'asc' })
     .exec((err, restaurants) => {
@@ -30,7 +30,7 @@ router.get('/asc', (req, res) => {
     })
 })
 
-router.get('/desc', (req, res) => {
+router.get('/desc', authenticated, (req, res) => {
   RestaurantList.find({})
     .sort({ name: 'desc' })
     .exec((err, restaurants) => {
@@ -44,7 +44,7 @@ router.get('/desc', (req, res) => {
     })
 })
 
-router.get('/category', (req, res) => {
+router.get('/category', authenticated, (req, res) => {
   RestaurantList.find({})
     .sort({ category: 'asc' })
     .exec((err, restaurants) => {
@@ -58,7 +58,7 @@ router.get('/category', (req, res) => {
     })
 })
 
-router.get('/rating', (req, res) => {
+router.get('/rating', authenticated, (req, res) => {
   RestaurantList.find({})
     .sort({ rating: 'desc' })
     .exec((err, restaurants) => {
