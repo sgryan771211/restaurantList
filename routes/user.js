@@ -13,7 +13,7 @@ router.post('/login', (req, res) => {
 
 // 註冊頁面
 router.get('/register', (req, res) => {
-  res.render('register')
+  res.render('register', { title: 'register', layout: 'users' })
 })
 
 // 註冊檢查
