@@ -3,7 +3,7 @@ const router = express.Router()
 
 // 登入頁面
 router.get('/login', (req, res) => {
-  res.render('login')
+  res.render('login', { title: 'login', layout: 'users' })
 })
 
 // 登入檢查
