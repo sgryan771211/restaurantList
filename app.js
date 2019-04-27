@@ -4,11 +4,22 @@ const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodoOverride = require('method-override')
+const session = require('express-session')
+const passport = require('passport')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 app.use(methodoOverride('_method'))
+
+app.use(session({
+  secret: 'asdfghjkl',
+}))
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+require('./config/passport')(passport)
 
 // 設定靜態檔案
 app.use(express.static('public'))
