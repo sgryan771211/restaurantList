@@ -7,6 +7,11 @@ const methodoOverride = require('method-override')
 const session = require('express-session')
 const passport = require('passport')
 
+// 判別開發環境
+if (process.env.NODE_ENV !== 'production') {      // 如果不是 production 模式
+  require('dotenv').config()                      // 使用 dotenv 讀取 .env 檔案
+}
+
 app.use(bodyParser.urlencoded({ extended: true }))
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
@@ -49,6 +54,7 @@ app.use('/sort', require('./routes/sort'))
 app.use('/search', require('./routes/search'))
 app.use('/restaurantList', require('./routes/restaurantList'))
 app.use('/users', require('./routes/user'))
+app.use('/auth', require('./routes/auths'))
 
 // 設定 express port 3000
 app.listen(3000, () => {
