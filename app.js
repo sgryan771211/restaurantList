@@ -35,6 +35,7 @@ app.use('/', require('./routes/home'))
 app.use('/sort', require('./routes/sort'))
 app.use('/search', require('./routes/search'))
 app.use('/restaurantList', require('./routes/restaurantList'))
+app.use('/users', require('./routes/user'))
 
 // 設定 express port 3000
 app.listen(3000, () => {
