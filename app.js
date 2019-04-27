@@ -14,6 +14,8 @@ app.use(methodoOverride('_method'))
 
 app.use(session({
   secret: 'asdfghjkl',
+  resave: 'false',
+  saveUninitialized: 'false',
 }))
 
 app.use(passport.initialize())
@@ -24,7 +26,7 @@ require('./config/passport')(passport)
 // 設定靜態檔案
 app.use(express.static('public'))
 
-mongoose.connect('mongodb://localhost/restaurantList', { useNewUrlParser: true })
+mongoose.connect('mongodb://localhost/restaurantList', { useNewUrlParser: true, useCreateIndex: true })
 
 const db = mongoose.connection
 
