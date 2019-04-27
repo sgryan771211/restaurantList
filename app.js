@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const methodoOverride = require('method-override')
 const session = require('express-session')
 const passport = require('passport')
+const flash = require('connect-flash')
 
 // 判別開發環境
 if (process.env.NODE_ENV !== 'production') {      // 如果不是 production 模式
@@ -34,6 +35,15 @@ app.use(express.static('public'))
 mongoose.connect('mongodb://localhost/restaurantList', { useNewUrlParser: true, useCreateIndex: true })
 
 const db = mongoose.connection
+
+app.use(flash())
+
+// 建立 local variables
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success_msg')
+  res.locals.warning_msg = req.flash('warning_msg')
+  next()
+})
 
 // 連線異常
 db.on('error', () => {
