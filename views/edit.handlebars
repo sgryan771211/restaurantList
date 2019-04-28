@@ -1,4 +1,5 @@
 <div class="container">
+  {{> messages}}
   <h5>修改餐廳資料</h5>
   <form action="/restaurantList/{{restaurant.id}}?_method=PUT" method="POST">
     <div class="form-row">
@@ -57,8 +58,8 @@
 
     <div class="form-group">
       <label for="description">文字描述</label>
-      <textarea type="text" class="form-control" id="description" name="description" value="{{restaurant.description}}"
-        placeholder="請輸入這間餐廳的特色"></textarea>
+      <textarea type="text" class="form-control" id="description" name="description"
+        placeholder="請輸入這間餐廳的特色">{{restaurant.description}}</textarea>
     </div>
 
     <div class="modal-footer">
